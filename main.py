@@ -40,6 +40,8 @@ def build_file(lang, file_content, file_toc, content, output):
     os.mkdir("tmp")
     os.mkdir("tmp/META-INF")
     os.mkdir("tmp/OEBPS")
+    with open("./tmp/Mimetype", "w") as f:
+        f.write(MIME_TYPE)
     with open("./tmp/META-INF/container.xml", "w") as f:
         f.write(CONTAINER)
     with open("./tmp/OEBPS/stylesheet.css", "w") as f:
@@ -51,13 +53,11 @@ def build_file(lang, file_content, file_toc, content, output):
     generate_chapters(content)
     shutil.make_archive('output', 'zip', "tmp") 
     shutil.rmtree("tmp")
-    with open("./mimetype", "w") as f:
-        f.write(MIME_TYPE)
-    z = zipfile.ZipFile('output.zip', 'a', zipfile.ZIP_DEFLATED) 
-    z.write('mimetype')
-    z.close()
+
+#     z = zipfile.ZipFile('output.zip', 'a', zipfile.ZIP_DEFLATED) 
+    # z.write('mimetype')
+    # z.close()
     shutil.move("output.zip", f"{output}.epub")
-    os.remove("mimetype")
     
 
 

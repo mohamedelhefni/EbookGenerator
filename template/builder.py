@@ -1,8 +1,9 @@
-import hashlib
+import uuid
 import datetime
 
 MIME_TYPE = "application/epub+zip"
 
+book_uuid = uuid.uuid4()
 
 def make_stylesheet(lang):
     text = ""
@@ -38,7 +39,6 @@ CONTAINER = """<?xml version="1.0"?>
 
 
 def make_content_meta(title, author, lang):
-    book_uuid = hashlib.md5(title.encode('utf-8')).hexdigest()
     return f"""
         <dc:identifier id="uuid_id" opf:scheme="uuid">{book_uuid}</dc:identifier>
         <dc:identifier opf:scheme="calibre">{book_uuid}</dc:identifier>
@@ -105,7 +105,6 @@ def make_navmap(chapters):
 
 # make book table of content
 def book_toc(title, chapters):
-    book_uuid = hashlib.md5(title.encode('utf-8')).hexdigest()
     return f"""<?xml version="1.0" encoding="UTF-8"?>
         <ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
           <head>
